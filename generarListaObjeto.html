@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container-form{
+            padding: 20px;
+            border:solid 2px black;
+            background-color: bisque;
+            margin: auto;
+            width: 80%;
+        }
+
+        .destacado{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!-- AQUI VA EL INPUT Y EL BOTÓN DE SUBMIT -->
+    </div>
+    <div>
+        <input type="search">
+    </div>
+    <div>
+        <!-- AQUI VA LA LISTA -->
+    </div>
+
+    <script>
+        //VARIABLES Y CONSTANTES
+        const divs=$$("div");
+        const input=crear("input");
+        input.setAttribute("type","text");
+        const boton=crear("button");
+        boton.textContent="Agregar producto";
+        const ul=crear("ul");
+        let productos=[];
+
+
+        //FUNCIONES
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        function $(elemento){
+            return document.querySelector(elemento);
+        }
+
+        function $$(elemento){
+            return document.querySelectorAll(elemento);
+        }
+
+        function limpiarInput(){
+            input.value="";
+            input.focus();
+        }
+
+        function mostrarProductos(){
+            productos.forEach((producto,index)=>{ //Genera un producto y una pos asociada a él
+                const li=crear("li");
+                li.textContent=producto;
+
+                //Cuando lo tenemos todo y ya hemos sacado los datos de local storage, queremos ser capaces de borrar los productos individualmente con un botón
+                const x=crear("button");
+                x.textContent="x";
+                li.append(x); //Añadimos la x al producto
+
+                x.addEventListener("click",()=>{//Que cuando se haga click en la x se elimine tanto de la lista visible como del array y el local storage
+                    li.remove();//Se borra ese li de la lista visible
+
+                    //Para eliminar ese elemento del array
+                    productos.splice(index,1); //A partir de la posición de producto, elimina 1 (a él mismo)
+
+                    //Para quitarlo de local Storage como tenemos el array ya actualizado, hay primero que limpiar el local storage y luego volver a insertar los productos
+                    localStorage.clear();
+                    productos.forEach(producto=>{
+                        localStorage.setItem("datos",JSON.stringify(productos));
+                    })
+
+                })
+
+                ul.append(li);//Se insertan los li en ul
+                //PROBLEMA DUPLICIDAD: El problema es que si ya hay algun elemento dentro del array, lo va a recorrer igual,
+                //creando un nuevo li para ese elemneto ya existente y el nuevo, por lo que en la primera ronda generará 
+                //solo un li y en la segunda generará de nuevo el primer li y el del producto nuevo que se ha introducido.
+                //Para solucionarlo hay que vaciar la lista antes de que se vaya a insertar un nuevo li
+
+
+
+            })
+        }
+
+        function eliminarProd(producto,index){
+            //Para eliminar 
+        }
+
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            divs[0].classList.add("container-form");
+            //Se inserta el input y boton en el primer div
+            divs[0].append(input);
+            divs[0].append(boton);
+           
+
+            //Si hay algo en local Storage queremos que se muestre aunque se reinicie el programa
+            if(localStorage.length!=0){//Si hay algo almacenado...
+                productos=JSON.parse(localStorage.getItem("datos"));//Hay que sacar los datos y pasarlos de nuevo a objeto almacenandolo en un array o algo, en este caso, se sobreescribe  el array productos
+                mostrarProductos();//Se muestran los productos
+            }
+
+            //Funcionalidad de click en el boton
+            boton.addEventListener("click",()=>{
+                let valorInput=input.value.trim();
+
+                if(valorInput!=""){//Si el input contiene algo
+                    productos.push(valorInput);//Se guarda en el array productos
+                }
+                
+                //Tras insertar el producto, se limpia el input y se pone el foco en el
+                limpiarInput();
+
+                // Se van creando li por cada producto que haya en el array
+                if(productos.length!=0){ //Si hay productos en el array  se recorre y se van creando li por cada producto que haya en el array
+                    ul.textContent="";//Limpieza de la lista antes de añadir nuevos li, para que se añadan los atiguos y nuevos sin duplicados
+                    
+                    mostrarProductos();//Aquí se crean e insertan los li en ul
+
+                    //Cuando tenemos los productos en el array, hay que ir almacenandolos tambien en localStorage
+                    localStorage.setItem("datos",JSON.stringify(productos));//Se almacena el array completo en local Storage
+
+                }
+                
+            })
+
+            
+
+
+            //Para que también funcione con enter
+            document.addEventListener("keydown",(e)=>{
+                if(e.key=="Enter"){
+                    let valorInput=input.value.trim();
+
+                if(valorInput!=""){//Si el input contiene algo
+                    productos.push(valorInput);//Se guarda en el array productos
+                }
+                
+                //Tras insertar el producto, se limpia el input y se pone el foco en el
+                limpiarInput();
+
+                // Se van creando li por cada producto que haya en el array
+                if(productos.length!=0){ //Si hay productos en el array  se recorre y se van creando li por cada producto que haya en el array
+                    ul.textContent="";//Limpieza de la lista antes de añadir nuevos li, para que se añadan los atiguos y nuevos sin duplicados
+                    
+                    mostrarProductos();//Aquí se crean e insertan los li en ul
+
+                    //Cuando tenemos los productos en el array, hay que ir almacenandolos tambien en localStorage
+                    localStorage.setItem("datos",JSON.stringify(productos));//Se almacena el array completo en local Storage
+
+                }
+                }
+            })
+
+
+            //Se inserta la ul en el segundo div
+            divs[2].append(ul);
+
+
+
+
+            //AÑADIDO: DESTACAR LOS PRODUCTOS AL PINCHAR SOBRE ELLOS
+            ul.addEventListener("click",(e)=>{
+                let pinchado=e.target;//Te saca dentro de una lista el valor que estás pinchando en ese instante
+                pinchado.classList.toggle("destacado");
+            })
+
+
+            //AÑADIDO 2: AÑADIR BUSCADOR
+            const buscador=$("div:nth-child(2) input");
+            const todosLosLi=$$("ul li");
+            
+            buscador.addEventListener("input",(e)=>{
+                let busqueda=e.target.value.trim();
+                
+                todosLosLi.forEach(li=>{
+                    if(li.textContent.includes(busqueda)){
+                        li.style.display="block";
+                    }else{
+                        li.style.display="none";
+                    }
+                })
+            })
+        })
+        
+    </script>
+</body>
+</html>

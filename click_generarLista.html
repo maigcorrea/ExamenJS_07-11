@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <!-- AQUÍ VA EL FORMULARIO Y EL BOTÓN -->
+    </div>
+    <div>
+        <!-- AQUI VA LA LISTA GENERADA -->
+    </div>
+    
+    <script>
+        //A PARTIR DEL EJERCICIO DE INSERTAR DINAMICAMENTE, QUE CUANDO SE PULSE UN BOTÓN SE VAYA GENERANDO LA LISTA
+
+        //CONSTANTES Y VARIABLES
+        const divs=$$("div");
+        const input=crearElemento("input");
+        input.setAttribute("type","text");
+        const boton=crearElemento("button");
+        boton.textContent="Agregar a la lista";
+        const ul=crearElemento("ul");
+
+        const productos=[];//Array donde se almacenan los productos de la lista
+
+
+        //FUNCIONES
+        function crearElemento(elemento){
+            return document.createElement(elemento);
+        }
+
+        function $(elemento){//Seleccionar un elemento
+            return document.querySelector(elemento);
+        }
+
+        function $$(elemento){//Seleccionar varios elementos de un mismo tipo
+            return document.querySelectorAll(elemento);
+        }
+
+        function limpiezaInput(){
+            input.value="";
+            input.focus();
+        }
+
+        function mostrarProductos(){
+            ul.textContent=""; //SE LIMPIA LA LISTA POR LO DEL PROBLEMA DE DUPLICIDAD (Lo explico unas lineas más adelante)
+            //Al hacer click también se limpia el input
+            limpiezaInput();
+
+            productos.forEach((producto,index)=>{ //Se genera un li por cada producto y un indice según la posición
+                const li=crearElemento("li");
+                li.textContent=producto; //Al li se le añade el contenido del producto
+
+                //También quiero añadir un botón para borrar los productos individualmente
+                const x=crearElemento("button");
+                x.textContent="x";
+                li.append(x);
+
+                x.addEventListener("click",()=>{
+                    li.remove();//Se borra de la lista visible
+                    localStorage.removeItem(`p${index}`);//Se borra de local storage utilizando la clave
+                    // Eliminamos el producto del array para mantenerlo sincronizado
+                    productos.splice(index, 1);//A partir de la posición, eliminamos 1
+
+                    // Volvemos a guardar el array actualizado en el localStorage
+                    actualizarLocalStorage();
+                })
+
+                ul.append(li);//Se inserta el li dentro de ul, y así se hace con todos los productos en las siguientes vueltas del foreach
+                //PROBLEMA DUPLICIDAD: El problema es que si ya hay un producto en el array, va a recorrerlo igualmente y va a generar un li de ese producto que ya existía antes,
+                // duplicando los datos, hay que vaciar el ul antes de insertar el siguiente elemento del array, para que así pille el primero, y este nuevo que se le ha insertado, y así consecutivamente
+
+                
+            })
+        }
+
+
+        function actualizarLocalStorage(){
+            localStorage.clear();//Se borra todo lo del local Storage
+
+            //Se vuelve a insertar el array productos ya actualizado, en formato clave:valor
+            productos.forEach((prod,index)=>{
+                localStorage.setItem(`p${index}`,prod);
+            })
+        }
+
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            //En el primer div insertamos el input y el boton de Agregar a la lista
+            divs[0].append(input);
+            divs[0].append(boton);
+
+            //En el segundo div insertamos la lista(ul) en la que se generarán los li, y en estos irán los productos del array
+            divs[1].append(ul);
+
+            //Cuando se de click al botón, que pille el valor del input y lo agrege a un array, 
+            //luego ese array se mostrará en forma de lista en el segundo div, y se almacenará en el localStage
+
+            //Recuperar los productos almacenados, si hay, del local stage, para poder mostrarlos
+            if(localStorage.length!=0){//Si el localStorage no está vacio...
+                for(let i=0;i<localStorage.length;i++){
+                    productos.push(localStorage.getItem(`p${i}`));
+                }
+            }
+            mostrarProductos();//Se muestran los productos
+            
+
+            boton.addEventListener("click",()=>{
+                let inputProducto=input.value.trim();
+
+                if(inputProducto!=""){//Si el producto no está vacio, se agrega al array
+                    productos.push(inputProducto);
+                    // localStorage.setItem("datos",productos); //Esto es para añadir de golpe al localStorage, no queremos eso
+                }
+                console.log(productos);
+
+                
+
+
+                //Al mismo tiempo hay que ir almacenando el array en el localStorage, lo voy a hacer almacenando cada item con formato clave:valor, para ello se recorre el array y se va añadiendo de 1 en 1
+                productos.forEach((prod,index)=>{
+                    localStorage.setItem(`p${index}`,prod);//NO hay que hacer el JSON.stringify porque no estamos metiendo un objeto entero en este caso
+                })
+
+
+                //Una vez relleno el array, este se imprime en la lista
+                //Creamos los li y, al contenido del li le metemos el array, e insertamos los li al ul
+                if(productos.length!=0){//Si el array NO está vacio, se generan los li, un li por cada producto
+                    mostrarProductos();
+                    console.log(productos);
+                } 
+                
+            })
+
+            //Fuera del click ya añadimos la ul al div para que la lista sea visible
+            divs[1].append(ul);
+
+        })
+    </script>
+</body>
+</html>
