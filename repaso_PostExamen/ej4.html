@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .div{
+            border: solid 1px black;
+            background-color: bisque;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        //VARIABLES
+        const info=crear("div");
+        info.setAttribute("id","info");
+        info.textContent="Presiona en algún punto de la pantalla ";
+
+
+        //FUNCIONES
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        
+        document.addEventListener("DOMContentLoaded",()=>{
+            info.classList.add("div");
+
+            document.addEventListener("mousemove",(e)=>{
+                //Obtener coordenadas del movimiento del ratón
+                const x=e.clientX;
+                const y=e.clientY;
+
+                //Obtener ancho y alto del div
+                const ancho=info.clientWidth;
+                const alto=info.clientHeight;
+
+                //Obtener la mitad de la altura y la anchura del div para saber el centro
+                const anchoMedio=ancho/2;
+                const altoMedio=alto/2;
+
+                //Calcular la posición para centrar el puntero en el div
+                const posX=x-anchoMedio;//Al ancho total se le quita el ancho medio del div
+                const posY=y-altoMedio;
+
+                info.textContent=`Posición eje x: ${x}; Posición eje y: ${y}`;
+
+                //Mover el div a la posición calculada
+                info.style.left=`${posX}px`;
+                info.style.top=`${posY}px`;
+            })
+
+            document.body.append(info);
+
+
+        })
+    </script>
+</body>
+</html>

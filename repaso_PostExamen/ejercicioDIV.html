@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        //VARIABLES
+        const info=crear("div");
+        info.setAttribute("id","info");
+
+
+        //FUNCIONES
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        
+        document.addEventListener("DOMContentLoaded",()=>{
+            
+            document.addEventListener("click",(e)=>{
+                //Obtener coordenadas del click
+                const x=e.clientX;
+                const y=e.clientY;
+
+                info.textContent=`Posición eje x: ${x}; Posición eje y: ${y}`;
+            })
+
+            document.body.append(info);
+
+
+        })
+    </script>
+</body>
+</html>
