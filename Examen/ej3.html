@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- BÚSQUEDA EN UNA LISTA -->
+    <!-- 
+        Dado el siguiente array que almacena nombres ["Antonio", "José", "Ana", "Jorge"]
+
+        1. Crea una lista con varios <li> con nombres del Array anterior
+
+        2. Crea un campo <input> de búsqueda
+
+        3. A medida que el usuario escribe en el campa, la lista debe filtrerse para mostrar solo los elementos que coincidan.
+
+    -->
+    <script>
+        //CONST Y VAR
+        //lista
+        const nombres=["Antonio","José","Ana","Jorge"];
+        const ul=crear("ul");
+
+        //buscador
+        const input=crear("input");
+        input.setAttribute("type","search");
+        let valorInput;
+        
+
+
+
+
+        //FUNCIONES
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+
+            //Buscador
+            document.body.append(input);
+
+            //Lista
+            nombres.forEach(nombre => {
+                const li=crear("li");
+                li.textContent=nombre;
+                ul.append(li);
+            });
+            
+
+            document.body.append(ul);
+
+            //Añadir funcionalidad al buscador
+            input.addEventListener("input",(e)=>{
+                valorInput=e.target.value;//Obtiene lo que se está escribiendo en tiempo real
+                let conjuntoLi=document.querySelectorAll("li");//Se seleccionan todos los li
+
+                conjuntoLi.forEach(li => {
+                    if(li.textContent.includes(valorInput)){
+                        li.style.display="block";
+                    }else{
+                        li.style.display="none";
+                    }
+                });
+            })
+
+
+
+            
+
+
+
+            
+
+            
+
+        })
+    </script>
+</body>
+</html>
