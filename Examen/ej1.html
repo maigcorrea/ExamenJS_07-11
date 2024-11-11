@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- CONTADOR DE CLICS -->
+    <!-- 
+            1. Crea un botón con el texto Contar clics 
+            2. Crea un <p> que muestre la cantidad de clics
+            3. Al hacer clic en el botón, el número en el poebe Incrementarse en uno -->
+    
+
+    <script>
+
+        //CONST Y VAR
+        const boton=crear("button");
+        boton.textContent="Contar clics";
+        const p=crear("p");
+        p.classList.add("contador");
+        let i=0;
+
+
+        //FUNCIONES 
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            p.textContent=0;//Se le asigna el contenido inicial a 0 clicks
+            boton.addEventListener("click",()=>{
+                i+=1;//A la var que llevará los clicks se le suma 1
+                p.textContent=i;//Se le asigna el nuevo contenido al párrafo
+            })
+
+            document.body.append(boton);
+            document.body.append(p);
+        })
+    </script>
+</body>
+</html>
