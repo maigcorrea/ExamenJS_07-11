@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- VISOR DE IMÁGENES CON ZOOM -->
+    <!-- 
+        1. Muestra una imagen en el documento
+        2. Crea dos botones. "Zoom in" y "Zoom Out”
+        3. Al hacer clic en "Zoom in", la imagen debe agrandarse, al hacer clic en "Zoom Out", debe reducirse.
+    -->
+    <script>
+        //VAR Y CONST
+        const img=crear("img");
+        img.setAttribute("src","https://picsum.photos/200/300");
+
+        const divBotones=crear("div");
+        const ampliar=crear("button");
+        ampliar.textContent="Zoom in";
+        const reducir=crear("button");
+        reducir.textContent="Zoom out";
+
+        //Tamaño por defecto de la img
+        let anchuraPredefinida=200;
+        let alturaPredefinida=300;
+
+        //Variables para modificar el tamaño de la img sumando o restandolo al tamaño original en función del botón al que se haga click
+        const contadorHeight=100;
+        const contadorWidth=100;
+
+        //FUNCIONES
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+
+            //Tamaño por defecto de la imagen
+            img.style.width=anchuraPredefinida+"px";
+            img.style.height=alturaPredefinida+"px";
+
+            ampliar.addEventListener("click",()=>{
+
+                //Modificamos el tamaño definido sumándole 100 cada vez que haga click
+                anchuraPredefinida+=contadorWidth;
+                alturaPredefinida+=contadorHeight;
+
+                img.style.width=anchuraPredefinida+"px";
+                img.style.height=alturaPredefinida+"px";
+
+            })
+
+
+            reducir.addEventListener("click",()=>{
+
+                //Modificamos el tamaño definido restandole 100 px cada vez que se le de al click
+                anchuraPredefinida-=contadorWidth;
+                alturaPredefinida-=contadorHeight;
+
+                img.style.width=anchuraPredefinida+"px";
+                img.style.height=alturaPredefinida+"px";
+            })
+
+
+
+            divBotones.append(ampliar);
+            divBotones.append(reducir);
+            document.body.append(divBotones);
+            document.body.append(img);
+        })
+
+    </script>
+</body>
+</html>
