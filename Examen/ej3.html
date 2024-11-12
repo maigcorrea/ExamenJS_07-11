@@ -59,7 +59,8 @@
                 let conjuntoLi=document.querySelectorAll("li");//Se seleccionan todos los li
 
                 conjuntoLi.forEach(li => {
-                    if(li.textContent.toLowerCase().includes(valorInput)){
+                    if(li.textContent.toLowerCase().includes(valorInput)){//Cada letra del string lo pilla con un array, el string es un array y va mirando si incluye cada letra. También se podría hacer con filter
+                        //listaLi.filter(li => li.textContent.toLowerCase().includes(valorInput)) li.style.display="block";
                         li.style.display="block";
                     }else{
                         li.style.display="none";
