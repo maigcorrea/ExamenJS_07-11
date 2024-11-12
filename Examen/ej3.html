@@ -59,7 +59,7 @@
                 let conjuntoLi=document.querySelectorAll("li");//Se seleccionan todos los li
 
                 conjuntoLi.forEach(li => {
-                    if(li.textContent.includes(valorInput)){
+                    if(li.textContent.toLowerCase().includes(valorInput)){
                         li.style.display="block";
                     }else{
                         li.style.display="none";
