@@ -8,13 +8,29 @@
 <body>
     <script>
         //CONST Y VAR
-
-
+        const input=document.createElement("input");
+        const boton=document.createElement("button");
+        const div=document.createElement("div");
+        boton.textContent="Enviar";
+        let texto;
         //FUNCIONES
 
 
         //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            boton.addEventListener("input",()=>{
+                
+                texto=input.value.trim();
 
+                if(texto==""){
+                    alert("El campo es obligatorio");
+                }else{
+                    alert("El formulario se ha enviado correctamente");
+                }
+            })
+            div.append(input,boton);
+            document.body.append(div);
+        })
         
     </script>
 </body>
