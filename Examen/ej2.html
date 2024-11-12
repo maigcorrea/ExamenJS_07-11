@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        /* Corrección */
+        
+    </style>
 </head>
 <body>
     <!-- VISOR DE IMÁGENES CON ZOOM -->
@@ -13,15 +17,16 @@
         3. Al hacer clic en "Zoom in", la imagen debe agrandarse, al hacer clic en "Zoom Out", debe reducirse.
     -->
     <script>
+        //Poner todo pegado para que no ocupe memoria el salto de línea
         //VAR Y CONST
         const img=crear("img");
         img.setAttribute("src","https://picsum.photos/200/300");
-
         const divBotones=crear("div");
         const ampliar=crear("button");
         ampliar.textContent="Zoom in";
         const reducir=crear("button");
         reducir.textContent="Zoom out";
+        let sum=1;//Correccion
 
         //Tamaño por defecto de la img
         let anchuraPredefinida=200;
@@ -52,6 +57,10 @@
                 img.style.width=anchuraPredefinida+"px";
                 img.style.height=alturaPredefinida+"px";
 
+                //Corrección
+                //otra opción con scale
+                //img.style.transform="scale($sum+=0.2)";
+
             })
 
 
@@ -63,6 +72,11 @@
 
                 img.style.width=anchuraPredefinida+"px";
                 img.style.height=alturaPredefinida+"px";
+
+
+                //Corrección
+                //otra opción con scale
+                //img.style.transform="scale($sum-=0.2)";
             })
 
 
@@ -71,7 +85,13 @@
             divBotones.append(reducir);
             document.body.append(divBotones);
             document.body.append(img);
+
+            // document.body.append(divBotones,img); Se pueden añadir todos los elementos de golpa esí
         })
+
+
+        
+
 
     </script>
 </body>
