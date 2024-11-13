@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .div{
+            border: solid 8px black;
+            background-color: bisque;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <script>
+        //VARIABLES
+        const info=crear("div");
+        info.setAttribute("class","div");
+        info.textContent="Haz click en cualquier parte para saber la posición del mouse";
+
+
+        //FUNCIONES
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        
+        document.addEventListener("DOMContentLoaded",()=>{
+            
+            document.addEventListener("click",(e)=>{
+                //Obtener coordenadas del click
+                const x=e.clientX;
+                const y=e.clientY;
+
+                info.textContent=`Posición eje x: ${x}; Posición eje y: ${y}`;
+            })
+
+
+            //FUNCIONALIDAD EJ 5
+
+            document.addEventListener("mousemove",(e)=>{
+                //Averiguar pos del mouse cuando se está moviendo
+                let x=e.clientX;
+                let y=e.clientY;
+
+                //Averiguamos el ancho y alto de la pantalla
+                const widthPantalla=document.documentElement.clientWidth;
+                const heigthPantalla=document.documentElement.clientHeight;
+
+                //Dividimos el ancho y alto entre dos para saber el límite de pixeles a partir del cual es lado dcho y lado izdo, y parte superior e inferior de la pantalla
+                const limiteWidth=widthPantalla/2;
+                const limiteHeight=heigthPantalla/2;
+
+                //Cuando el ratón esté pegado a lado izquierdo de la pantalla cambiar el color de fondo
+                //de la página a blue.
+
+                //  Cuando el ratón esté pegado a lado derecho de la pantalla cambiar el color de fondo
+                // de la página a rojo. (document.documentElement.clientWidth nos da el ancho
+                // efectivo de la página).
+                if(x<limiteWidth){
+                    document.body.style.backgroundColor="blue";
+                }else{
+                    document.body.style.backgroundColor="red";
+                }
+
+                // Cuando el ratón este pegado a la parte superior de la pantalla cambiar el color de
+                // borde del div a verde.
+                // Cuando el ratón esté pegado a la parte inferior de la pantalla cambiar el color de
+                // borde del div a aquamarine. (document.documentElement.clientHeight nos da el
+                // alto efectivo de la página).
+                
+                if(y<limiteHeight){
+                    info.style.borderColor="green";
+                }else{
+                    info.style.borderColor="aquamarine";
+                }
+                
+            })
+
+
+
+            
+                
+            document.body.append(info);
+
+
+        })
+    </script>
+</body>
+</html>
