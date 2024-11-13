@@ -17,7 +17,8 @@
         //VARIABLES
         const info=crear("div");
         info.setAttribute("id","info");
-        info.textContent="Presiona en algún punto de la pantalla ";
+        info.textContent="Haz click izquierdo para mover y click derecho para detener";
+        let movimiento=false;//Variable para controlar si el div se tiene que mover o no
 
 
         //FUNCIONES
@@ -29,36 +30,54 @@
         document.addEventListener("DOMContentLoaded",()=>{
             info.classList.add("div");
 
-           
-                
+            //Es mejor utilizar el evento "mousedown" en vez de "click" porque puede que no detecte el click correctamente si usas un touchpad o ciertos dispositivos con los botones integrados.
+            info.addEventListener("mousedown",(e)=>{
+                //Para saber si se ha hecho click con el botón dcho o izdo se usa la propiedad button
+                if(e.button===0){ //0 representa el botón izquierdo, 1 el botón del medio, y 2 el botón derecho
+                    movimiento=true;//Si se le da al click izdo, el movimiento se activa
+                }else if(e.button===2){
+                    movimiento=false;//Si se le da al click dcho, se desactiva el movimiento
+                    e.preventDefault();//Evitar que salga el menu contextual al pulsar click dcho
+                }
+            })
 
-                info.addEventListener("mousedown",(e)=>{
-                    //Obtener coordenadas del movimiento del ratón
-                    const x=e.clientX;
-                    const y=e.clientY;
 
-                    //Obtener ancho y alto del div
-                    const ancho=info.clientWidth;
-                    const alto=info.clientHeight;
+            document.addEventListener("mousemove",(m)=>{
 
-                    //Obtener la mitad de la altura y la anchura del div para saber el centro
-                    const anchoMedio=ancho/2;
-                    const altoMedio=alto/2;
-
-                    //Calcular la posición para centrar el puntero en el div
-                    const posX=x-anchoMedio;//Al ancho total se le quita el ancho medio del div
-                    const posY=y-altoMedio;
-
-                    info.textContent=`Posición eje x: ${x}; Posición eje y: ${y}`;
-
-                    //Mover el div a la posición calculada
-                    info.style.left=`${posX}px`;
-                    info.style.top=`${posY}px`;
-                })
+                if(movimiento){//Si el movimiento es true, se mueve el div con el ratón
+                    //Posición del mouse
+                    let xMouse=m.clientX;
+                    let yMouse=m.clientY;
+    
+                    //Si queremos que el puntero quede centrado en el div, dividimos el alto y ancho del div/2 y se lo restamos a la pos del mouse
+                    let centrarWidth=xMouse-info.clientWidth/2;
+                    let centrarHeight=yMouse-info.clientHeight/2;
+    
+                    //Cambiar la posición del div a la posición del mouse
+                    info.style.left=`${centrarWidth}px`;
+                    info.style.top=`${centrarHeight}px`;
+                }
+            })
                 
             })
 
             document.body.append(info);
+
+
+            //APUNTES IMPORTANTES
+            
+            /*
+                - mousedown: Este evento se dispara en el momento en que el botón del ratón es presionado, sin necesidad de soltarlo. Detecta cualquier tipo de clic (izquierdo, derecho o central) en el instante en que se presiona el botón del ratón, por lo que permite detectar el botón específico (izquierdo, derecho o central) que se está utilizando.
+
+                - click: Este evento se dispara cuando se completa una "acción de clic", es decir, cuando el botón del ratón se presiona y luego se suelta. Por lo tanto, click requiere tanto el mousedown (presionar) como el mouseup (soltar) en el mismo lugar, y suele referirse al clic izquierdo. También puede ser menos efectivo en touchpads, ya que algunos dispositivos integran el clic en el área de desplazamiento o interpretan el toque de manera diferente.
+
+                ¿Cuándo usar cada uno?
+                mousedown: Es ideal para casos en los que necesitas detectar el botón específico que se presiona o activar algo en el momento exacto en que se hace clic, independientemente de si el botón se suelta.
+
+                click: Úsalo cuando solo necesitas saber que se ha hecho un clic completo y no te importa tanto el tipo de botón.
+                En tu caso, mousedown es útil porque quieres detectar el clic izquierdo o derecho de inmediato, independientemente de si el botón se mantiene presionado.
+
+            */
 
     </script>
 </body>
