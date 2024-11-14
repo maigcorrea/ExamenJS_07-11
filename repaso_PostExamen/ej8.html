@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .div{
+            border: solid 1px black;
+            background-color: bisque;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <script>
+        //VARIABLES
+        const info=crear("div");
+        info.setAttribute("class","div");
+        info.textContent="Voy a cambiar de posición aleatoriamente";
+
+
+        //FUNCIONES
+        function crear(elemento){
+            return document.createElement(elemento);
+        }
+
+        //Función del ej 8 para mover aleatoriamente, luego llamamos a esta función en un intervalo cada 2 seg
+        function generarPosAleat(){
+            //Averiguar el ancho y alto total de la pantalla
+            const widthPantalla=document.documentElement.clientWidth;
+            const heigthPantalla=document.documentElement.clientHeight;
+
+            //Averiguar el ancho y alto del div
+            const anchoDiv=info.offsetWidth;
+            const altoDiv=info.offsetHeight;
+
+            //Generar posición aleatoria asegurando que el div no se salga del area visible
+            let posAlX=Math.random()*(widthPantalla-anchoDiv);
+            let posAlY=Math.random()*(heigthPantalla-altoDiv);
+
+            //Modificar la posición del div
+            info.style.left=`${posAlX}px`;
+            info.style.top=`${posAlY}px`;
+        }
+
+        
+        document.addEventListener("DOMContentLoaded",()=>{
+            
+            document.addEventListener("click",(e)=>{
+                //Obtener coordenadas del click
+                const x=e.clientX;
+                const y=e.clientY;
+
+                info.textContent=`Posición eje x: ${x}; Posición eje y: ${y}`;
+            })
+
+
+            document.body.append(info);
+
+            setInterval(generarPosAleat,2000);
+
+        })
+
+
+        // APUNTES PARA OBTENER EL ALTO Y ANCHO DEL DIV
+
+        // (clientWidth/clientHeight y offsetWidth/offsetHeight) son útiles para obtener el tamaño de un elemento, pero tienen ligeras diferencias en cuanto a lo que incluyen:
+
+        // offsetWidth y offsetHeight: Incluyen el ancho/alto total del elemento, considerando el contenido, el padding y el borde (border), pero no el margen. Son ideales si quieres obtener el tamaño completo del elemento en pantalla.
+
+        // clientWidth y clientHeight: Incluyen solo el contenido y el padding, pero excluyen el borde y el margen. Si tu div tiene bordes visibles, esta medida puede ser un poco menor que offsetWidth/offsetHeight.
+
+        // ¿Cuál deberías usar?
+        // En este caso, offsetWidth y offsetHeight son preferibles, ya que te aseguran que el cálculo sea preciso incluso si el div tiene bordes. Esto te ayudará a evitar que el borde del div se salga del área visible cuando calculas su posición aleatoria.
+
+        // Resumen
+        // Si necesitas el tamaño total que ocupa el elemento en pantalla, incluyendo el borde, usa offsetWidth/offsetHeight.
+        // Si el borde no es relevante y solo quieres el tamaño del contenido con el padding, clientWidth/clientHeight es suficiente.
+        // Para tu caso, te recomendaría continuar con offsetWidth y offsetHeight.
+    </script>
+</body>
+</html>
