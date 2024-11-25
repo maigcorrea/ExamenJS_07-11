@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        let cont=crear("p");
+        let i=0;
+
+        const btnMas=crear("button");
+        btnMas.textContent="Incrementar";
+        const btnMenos=crear("button");
+        btnMenos.textContent="Decrementar";
+
+        //FUNCIONES
+        function crear(e){
+            return document.createElement(e);
+        }
+
+        //CÓDIGO
+        
+        document.addEventListener("DOMContentLoaded",()=>{
+            cont.textContent=null;
+            btnMas.addEventListener("click",()=>{
+                cont.textContent=i;
+                i+=1;
+            })
+
+            btnMenos.addEventListener("click",()=>{
+                cont.textContent=i;
+                i--;
+            })
+
+            document.body.append(btnMenos,btnMas,cont);
+
+        })
+    </script>
+</body>
+</html>

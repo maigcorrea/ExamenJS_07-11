@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //CONST Y VAR
+        const btn=crear("button");
+        btn.textContent="Añadir";
+
+        const ul=crear("ul");
+        const arr=["perro","casa","mundo","js","ordenador"]
+
+        //FUNCIONES
+        function crear(e){
+            return document.createElement(e);
+        }
+
+
+        //CÓDIGO GENERAL
+        document.addEventListener("DOMContentLoaded",()=>{
+            btn.addEventListener("click",()=>{
+                const li=crear("div");
+                li.textContent=arr[Math.round(Math.random()*arr.length)];
+                ul.append(li);
+            })
+
+            document.body.append(btn);
+            document.body.append(ul);
+        })
+    </script>
+</body>
+</html>

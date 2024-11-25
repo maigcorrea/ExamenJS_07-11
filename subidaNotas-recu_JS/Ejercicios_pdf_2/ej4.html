@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .divImg{
+            display: flex;
+        }
+
+        img{
+            width: 200px;
+            height: auto;
+        }
+
+        img:hover{
+            cursor: pointer;
+        }
+
+        .divGrande{
+            padding: 20px;
+            width: 600px;
+            height: auto;
+            display: none;
+            background-color: red;
+        }
+
+        .divGrande img{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        const divImg=crear("div");
+        divImg.classList.add("divImg");
+
+        //FUNCIONES
+        function crear(e){
+            return document.createElement(e);
+        }
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            divImg.innerHTML=`
+                <img src="./img/th.jpeg" alt="">
+                <img src="./img/kitten.jpg" alt="">
+            `;
+
+            const imgs=document.querySelectorAll("img");
+            imgs.forEach(img=>{
+                img.addEventListener("click",(e)=>{
+                    console.log("hola");
+                    const divGrande=crear("div");
+                    divGrande.classList.add("divGrande");
+                    // let src=e.getAttribute("src");
+
+
+                    // divGrande.append(e);
+                    divGrande.style.display="block";
+                    document.body.append(divGrande);
+
+                })
+            })
+            document.body.append(divImg);
+        })
+
+    </script>
+</body>
+</html>

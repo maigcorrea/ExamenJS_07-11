@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        td{
+            border: solid 1px black;
+        }
+    </style>
+</head>
+<body>
+    
+    <script>
+        //CONST Y VAR
+        const inputBuscar=crear("input");
+        inputBuscar.setAttribute("type","search");
+
+        //FUNCIONES
+        function crear(e){
+            return document.createElement(e);
+        }
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            document.body.innerHTML=`
+                <table>
+                    <tr class="tr"><td>Maite</td><td>19</td><td>maite@gmail.com</td></tr>
+                    <tr class="tr"><td>Ana</td><td>20</td><td>ana@gmail.com</td></tr>
+                    <tr class="tr"><td>CocaCola</td><td>30</td><td>coca@gmail.com</td></tr>
+                </table>
+            `;
+
+
+            const nombres=document.querySelectorAll("tr td:nth-child(1)");
+            inputBuscar.addEventListener("input",(e)=>{
+                let value=e.target.value.toLowerCase().trim();
+                console.log(value);
+                nombres.forEach(nombre=>{console.log(nombre);
+                    const trPadre=nombre.parentElement;
+                    if(nombre.textContent.toLowerCase().includes(value)){
+                        trPadre.style.display="block";
+                    }else{
+                        trPadre.style.display="none";
+                    }
+                })
+            })
+
+            document.body.prepend(inputBuscar);
+
+        })
+    </script>
+</body>
+</html>

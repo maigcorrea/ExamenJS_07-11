@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .divBusqueda{
+            border:solid 1px black;
+            width: fit-content;
+            padding: 50px;
+            margin: auto;
+        }
+
+        .destacar{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div>
+        Aqui va el buscador
+    </div>
+    
+    <div>
+        Aqui va la lista de tareas
+    </div> -->
+    
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            //CONSTANTES Y VARIABLES
+            //Buscador
+            const divInsert=crearElemento("div");
+            divInsert.classList.add("divBusqueda");
+            const barraInsert=crearElemento("input");
+            barraInsert.setAttribute("type","text");
+            const btnInsert=crearElemento("input");
+            btnInsert.setAttribute("type","button");
+            btnInsert.setAttribute("value","Guardar tarea");
+            //Lista tareas
+            const divList=crearElemento("div");
+            const ul=crearElemento("ul");
+            const tareas=[];//Array en donde se almacenarán las tareas
+
+
+            //FUNCIONES
+            function crearElemento(e){
+                return document.createElement(e);
+            }
+
+            function select(e){//Seleccionar 1 elemento
+                return document.querySelector(e);
+            }
+
+            function selectAll(e){//Seleccionar todos los elementos
+                return document.querySelectorAll(e);
+            }
+
+            //Función de limpieza y autofocus del input (una vez se haya pulsado el botón)
+            function limpiezaInput(){
+                barraInsert.value="";
+                barraInsert.focus();
+            }
+
+            //Función para imprimir la lista de tareas (se llamará una vez hemos hecho click en el botón de añadir tareas)
+            function mostrarTareas(){
+                ul.textContent="";//Se limpia la lista antes de añadir cada elemento por el problema de duplicidad
+                tareas.forEach((tarea,index) => {
+                    const li=crearElemento("li");
+                    li.textContent=tarea;
+
+
+                    //Al mismo tiempo hay que ir almacenando las tareas en el local storage para que no se pierdan al recargar la página
+                    localStorage.setItem(index,tarea);
+                    
+                    //Hasta aquí lo básico, ahora se le añade un botón de x cada tarea para poder eliminarla
+                    const x=crearElemento("button");
+                    x.textContent="x";
+                    li.append(x);
+
+                    //Dar funcionalidad a la x
+                    x.addEventListener("click",()=>{
+                        li.remove();//Se borra de la lista visible
+                        localStorage.removeItem(index);//Se borra el item del local Storage
+                        tareas.splice(index,1);//Se borra del array de tareas para que esté sincronizado con el local Storage, ahora hay que actualizar el array
+
+
+                        //Para borrar el elemento del localStorage, hay que vaciarlo por completo y luego volver a insertar el array
+                        actualizarLocalStorage();
+                    })
+
+                    //Añadir funcionalidad de que al pulsar la tarea en concreto, esta se destaque entre las demás
+                    li.addEventListener("click",()=>{
+                        li.classList.toggle("destacar");
+                    })
+
+
+
+
+
+
+                    ul.append(li);
+                });
+                divList.append(ul);
+                document.body.append(divList);
+
+                
+            }
+
+            function actualizarLocalStorage(){
+                localStorage.clear();
+                tareas.forEach((tarea,index)=>{
+                    localStorage.setItem(index,tarea);
+                })
+            }
+
+
+            //CÓDIGO GENERAL
+            //Se crean los elementos (Barra de busqueda y btn) y se introducen en el body del DOM
+            divInsert.append(barraInsert);
+            divInsert.append(btnInsert);
+            document.body.append(divInsert);
+
+            //Se añade funcionalidad a la barra de insertar tareas y al btn
+            //DE ESTA FORMA SE HACE SI NO QUIERES ALMACENAR LAS TAREAS EN UN ARRAY
+
+            // btnInsert.addEventListener("click",()=>{
+            //     let valorInput=barraInsert.value.trim();
+            //     let li=crearElemento("li");
+            //     li.textContent=valorInput;
+            //     ul.append(li);
+            //     limpiezaInput();
+
+            // });
+
+            // divList.append(ul);
+            // document.body.append(divList);
+
+            //EN CASO DE QUE ALMACENES LAS TAREAS EN UN ARRAY
+
+            //LocalStorage. Si el localStorage no está vacio, se cargan los elementos que tiene dentro en el array y se muestran las tareas
+            if(localStorage.length!=0){
+                for (let i = 0; i < localStorage.length; i++) {
+                    tareas.push(localStorage.getItem(i));   
+                }
+                mostrarTareas(); 
+            }
+
+            btnInsert.addEventListener("click",(e)=>{
+                let valorInput=barraInsert.value.trim();
+                if(valorInput!=""){//Si no está vacio el valor del input, la tarea se inserta en el array
+                    tareas.push(valorInput);
+                }
+                limpiezaInput();
+                mostrarTareas();//Se muestra la lista de tareas
+
+
+                
+            })
+
+            
+
+        })
+    </script>
+</body>
+</html>

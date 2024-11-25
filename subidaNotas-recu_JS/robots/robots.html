@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .divBusc{
+            margin: auto;
+            width: 40%;
+            text-align: center;
+            padding: 50px;
+            border: solid 1px black;
+        }
+
+        .rob{
+            border: solid 1px black;
+            width: fit-content;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- <div>
+        Aqui va el buscador
+    </div> -->
+    <!-- <div>
+        Aquí se cargan los robots
+    </div> -->
+
+    <script src="./datos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            //CONST Y VAR 
+            //Buscador
+            const divBuscador=crear("div");
+            divBuscador.classList.add("divBusc");
+            const inputBuscar=crear("input");
+            inputBuscar.setAttribute("type","search");
+            inputBuscar.setAttribute("placeholder","Buscar ...");
+            //Robots
+            const divRobots=crear("div");
+            divRobots.style.display="flex";
+            divRobots.style.flexWrap="wrap";
+            divRobots.style.justifyContent="center";
+            divRobots.style.marginTop="50px";
+            
+
+            //FUNCIONES
+            function crear(e){
+                return document.createElement(e);
+            }
+
+            function select(e){
+                return document.querySelector(e);
+            }
+
+            function selectAll(e){
+                return document.querySelectorAll(e);
+            }
+
+            function campoBusqueda(){
+                inputBuscar.addEventListener("input",(e)=>{
+                let valorBusq=e.target.value.toLowerCase().trim();
+
+                    let nombres=selectAll("h3");
+                    nombres.forEach(nombre => {
+                        let contenedorRobot=nombre.parentElement;
+
+                        if(nombre.textContent.toLowerCase().includes(valorBusq)){
+                            console.log("encontrado");
+                            contenedorRobot.style.display="block";
+                        }else{
+                            contenedorRobot.style.display="none";
+                        }
+                    });
+            })
+
+            divBuscador.append(inputBuscar);
+            document.body.prepend(divBuscador);
+            }
+
+            //CÓDIGO
+            //Se da funcionalidad y se inserta el buscador en el DOM
+
+            
+
+
+
+
+
+            //Se cargan los datos de la API LOCAL
+
+            //Desetructurar datos
+            let [{image,email,firstName,phone}]=users;
+
+            //Recorrer el objeto
+            users.forEach(user => {
+                const robot=crear("div");
+                robot.classList.add("rob");
+
+                robot.innerHTML=`
+                    <img src=${user.image}>
+                    <h3>${user.firstName}</h3>
+                    <p>${user.email}</p>
+                    <p>${user.phone}</p>
+                `;
+
+                divRobots.append(robot);
+            });
+
+            document.body.append(divRobots);
+
+            campoBusqueda();
+        })
+    </script>
+</body>
+</html>
