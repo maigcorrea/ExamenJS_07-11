@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        const inputNombre=crear("input");
+        inputNombre.setAttribute("type","text");
+        inputNombre.setAttribute("class","nombre");
+        inputNombre.setAttribute("placeholder","Nombre");
+
+        const inputCorreo=crear("input");
+        inputCorreo.setAttribute("type","text");
+        inputCorreo.setAttribute("class","correo");
+        inputCorreo.setAttribute("placeholder","Correo");
+
+
+        const inputContraseña=crear("input");
+        inputContraseña.setAttribute("type","text");
+        inputContraseña.setAttribute("class","contraseña");
+        inputContraseña.setAttribute("placeholder","Contraseña");
+        
+        const boton=crear("button");
+        boton.textContent="Enviar";
+        //FUNCIONES 
+        function crear(e){
+            return document.createElement(e);
+        }
+
+        //CODIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            boton.addEventListener("click",()=>{
+                if(inputNombre.value.trim()!=""){
+                    if(inputCorreo.value.trim()!=""){
+                        if(inputCorreo.value.trim().includes("@gmail.com")){
+                            if(inputContraseña.value.trim()!=""){
+                                alert("Exito");
+                            }else{
+                                alert("La Contraseña está vacía");
+                            }
+                        }else{
+                            alert("Formato del correo NO valido");
+                        }     
+                    }else{
+                        alert("El correo está vacío");
+                    }
+                }else{
+                    alert("El nombre está vacío");
+                }
+            })
+
+            document.body.append(inputNombre,inputCorreo,inputContraseña,boton);
+        })
+    </script>
+</body>
+</html>
