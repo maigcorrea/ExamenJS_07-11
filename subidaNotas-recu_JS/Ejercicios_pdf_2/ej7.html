@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        let cont=0;
+        const cronometro=document.createElement("p");
+        cronometro.textContent=cont;
+
+        const iniciar=document.createElement("button");
+        iniciar.textContent="Iniciar";
+
+        const pausar=document.createElement("button");
+        pausar.textContent="Pausar";
+
+        const reiniciar=document.createElement("button");
+        reiniciar.textContent="Reiniciar";
+
+        let intervaloTiempo=null;
+
+        //FUNCIONES
+        function incrementarSegundo(){
+            cont++;
+            cronometro.textContent=cont;
+        }
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            document.body.append(cronometro,iniciar,pausar,reiniciar);
+            iniciar.addEventListener("click",()=>{
+                intervaloTiempo=setInterval(incrementarSegundo, 1000);
+            });
+
+            pausar.addEventListener("click",()=>{
+                clearInterval(intervaloTiempo);
+            })
+
+            reiniciar.addEventListener("click",()=>{
+                cont=0;
+                cronometro.textContent=cont;
+            })
+        })
+    </script>
+</body>
+</html>
