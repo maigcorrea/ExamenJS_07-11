@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+            const inputTarea=crear("input");
+            inputTarea.setAttribute("type","text");
+
+            const button=crear("button");
+            button.textContent="Añadir tarea";
+
+            const ul=crear("ul");
+        //FUNCIONES
+            function crear(e){
+                return document.createElement(e);
+            }
+
+            function limpiarInput(){
+                inputTarea.value="";
+                inputTarea.focus;
+            }
+
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            
+
+            //Dar funcionalidad al boton
+            button.addEventListener("click",()=>{
+                let valorTarea=inputTarea.value.trim();
+                const li=crear("li");
+                li.textContent=valorTarea;
+
+                //Le añadimos el botón de eliminar
+                const x=crear("button");
+                x.textContent="X";
+                //Dar funcionalidad a la x
+                x.addEventListener("click",()=>{
+                    li.remove();//Quitar de la lista visible
+                })
+
+                li.append(x);
+                ul.append(li);
+                limpiarInput();
+
+            })
+
+            document.body.append(inputTarea,button,ul);
+            
+        })
+    </script>
+</body>
+</html>
