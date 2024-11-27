@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+            const inputTarea=crear("input");
+            inputTarea.setAttribute("type","text");
+
+            const boton=crear("button");
+            boton.textContent="Añadir tarea";
+
+            const ul=crear("ul");
+
+            const tareas=[];//Array para almacenar las tareas en el localStorage
+
+        //FUNCIONES
+        function crear(e){
+            return document.createElement(e);
+        }
+
+        function mostrarListaTareas(){
+            boton.addEventListener("click",()=>{
+                const valorTarea=inputTarea.value.trim();
+                if(valorTarea!=""){
+                    const li=crear("li");
+                    li.textContent=valorTarea;
+                    tareas.push(valorTarea);//Almacenar la tarea en el array para el localStorage
+
+                    //Añadir la x para borrar la tarea
+                    const x=crear("button");
+                    x.textContent="X";
+
+                    x.addEventListener("click",()=>{
+                        li.remove();//Quitamos el elemento de la lista visible
+                    })
+
+                    li.append(x);
+                    ul.append(li);
+                    limpiarInput();
+                }
+                
+
+            })
+        }
+        function limpiarInput(){
+            inputTarea.value="";
+            inputTarea.focus();
+        }
+
+
+        //CÓDIGO
+
+        document.addEventListener("DOMContentLoaded",()=>{
+            mostrarListaTareas();
+
+
+            document.body.append(inputTarea,boton,ul);
+        })
+
+
+
+    </script>
+</body>
+</html>

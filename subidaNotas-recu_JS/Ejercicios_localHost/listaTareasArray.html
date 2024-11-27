@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .destacar{
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        const inputTarea=crear("input");
+            inputTarea.setAttribute("type","text");
+
+            const boton=crear("button");
+            boton.textContent="Añadir tarea";
+
+            const ul=crear("ul");
+
+            const tareas=[];//Array para almacenar las tareas en el localStorage
+
+
+        //FUNCIONES
+        function crear(e){
+            return document.createElement(e);
+        }
+
+        function mostrarTareas(){
+            console.log(tareas);
+            ul.textContent="";
+            tareas.forEach((tarea,index)=>{
+                const li=crear("li");
+                li.textContent=tarea;
+
+                localStorage.setItem(index,tarea);//Se almacena al mismo tiempo en el localStorage
+
+                //Hacer el botón de x de eliminar tarea
+                const x=crear("button");
+                x.textContent="x";
+                li.append(x);
+
+                x.addEventListener("click",()=>{
+                    li.remove();//Se elimina de la lista visible
+                    tareas.splice(index,1);//Se elimina del array
+                    //Falta eliminar del localStorage
+                    actualizarLocalStorage();
+                })
+
+                //Resaltar la tarea
+                li.addEventListener("click",()=>{
+                    li.classList.toggle("destacar");
+                })
+
+                ul.append(li);
+            })
+
+            document.body.append(ul);
+        }
+
+        function limpiarInput(){
+            inputTarea.value="";
+            inputTarea.focus();
+        }
+
+        function actualizarLocalStorage(){
+            localStorage.clear();
+            tareas.forEach((tarea,index)=>{
+                localStorage.setItem(index,tarea);
+            })
+        }
+
+
+        //CODIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            document.body.append(inputTarea,boton);
+
+            //Antes de hacer algo, hay que comprobar si hay datos en el localStorage e imprimirlos
+            if(localStorage.length!=0){
+                for (let i=0;i<localStorage.length;i++) {
+                    tareas.push(localStorage.getItem(i));
+                }
+                mostrarTareas();
+            }
+
+            boton.addEventListener("click",()=>{
+                const valorTarea=inputTarea.value.trim();
+                if(valorTarea!=""){
+                    tareas.push(valorTarea);
+                }
+                mostrarTareas();
+                limpiarInput();
+                
+            })
+
+            
+        })
+    </script>
+</body>
+</html>
