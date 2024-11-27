@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        const select=document.createElement("select");
+        const colores=["blue","green","yellow"];
+
+        const boton=document.createElement("button");
+        boton.textContent="Guardar preferencia";
+
+
+        let colorSeleccionado=null;
+        //FUNCIONES
+
+
+        //CÓDIGO
+        //Antes comprobamos si hay algo en el localStorage
+        let colorAlmacenado= localStorage.getItem("color") || "white"; //Si hay algo en el localStorage, se asigna, si no hay nada, se asigna el color blanco
+        if(colorAlmacenado){
+            document.body.style.backgroundColor=colorAlmacenado;
+        }
+
+        colores.forEach(color=>{
+            const opt=document.createElement("option");
+            opt.setAttribute("value",color);
+            opt.textContent=color;
+            select.append(opt);
+        })
+
+
+        boton.addEventListener("click",()=>{
+            colorSeleccionado=select.value.toLowerCase();
+            document.body.style.backgroundColor=colorSeleccionado;
+            localStorage.setItem("color",colorSeleccionado);
+        })
+
+        document.body.append(select,boton);
+    </script>
+</body>
+</html>
