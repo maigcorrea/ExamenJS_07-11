@@ -4,11 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        div{
+            width: 50%;
+            overflow: hidden;
+        }
+        img{
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <!-- EL EJERCICIO DE AMPLIAR Y REDUCIR LA IMAGEN EN FUNCIÓN DE UNOS BOTONES -->
     <script>
+        //CONST Y VAR
+        const divImg=document.createElement("div");
+        const img=document.createElement("img");
+        img.setAttribute("src","./img/kitten.jpg");
+        divImg.append(img);
 
+        const ampliar=document.createElement("button");
+        const reducir=document.createElement("button");
+
+        ampliar.textContent="Ampliar";
+        reducir.textContent="Reducir";
+
+        let escala=1;
+        //FUNCIONES
+
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            ampliar.addEventListener("click",()=>{
+                escala+=0.2;
+                img.style.scale=escala;
+            })
+
+            reducir.addEventListener("click",()=>{
+                escala-=0.2;
+                img.style.scale=escala;
+            })
+            document.body.append(divImg,ampliar,reducir);
+        })
     </script>
 </body>
 </html>
