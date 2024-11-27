@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        let i=0
+
+
+        const cont=document.createElement("p");
+        cont.textContent=i;
+
+
+        const incrementar=document.createElement("button");
+        const decrementar=document.createElement("button");
+
+        incrementar.textContent="Incrementar";
+        decrementar.textContent="Decrementar";
+
+        //CODIGO
+
+        incrementar.addEventListener("click",()=>{
+            i++;
+            cont.textContent=i;
+        })
+
+        decrementar.addEventListener("click",()=>{
+            i--;
+            cont.textContent=i;
+        })
+
+        document.body.append(cont,incrementar,decrementar);
+    </script>
+</body>
+</html>
