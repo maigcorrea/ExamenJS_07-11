@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="buscador" type="text" placeholder="Buscar...">
+    <ul id="filterList">
+        <li>Manzana</li>
+        <li>Plátano</li>
+        <li>Cereza</li>
+        <li>Zanahoria</li>
+    </ul>
+    <script>
+        //CONST Y VAR
+        const buscador=seleccionar("#buscador");
+        const ul=seleccionar("#filterList");
+        const li=seleccionarTodos("#filterList li");
+
+
+        //FUNCIONES
+        function seleccionar(e){
+            return document.querySelector(e);
+        }
+
+        function seleccionarTodos(e){
+            return document.querySelectorAll(e);
+        }
+
+
+        //CÓDIGO
+
+        document.addEventListener("DOMContentLoaded",()=>{
+            buscador.addEventListener("input",(e)=>{
+                let valorBusqueda=e.target.value.toLowerCase().trim();
+                
+                
+                li.forEach(elemento=>{
+                    if(elemento.textContent.toLowerCase().includes(valorBusqueda)){
+                        elemento.style.display="block";
+                    }else{
+                        elemento.style.display="none";
+                    }
+
+                })
+            })
+        })
+
+    </script>
+</body>
+</html>

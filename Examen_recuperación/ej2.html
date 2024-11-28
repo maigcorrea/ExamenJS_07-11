@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //VARIABLES Y CONST
+        const p=document.createElement("p");
+        p.textContent="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, cupiditate!";
+        const boton=document.createElement("button");
+        boton.textContent="click";
+
+        
+        const boton2=document.createElement("button");
+        boton2.textContent="Cambiar texto y URL";
+        const enlace=document.createElement("a");
+        enlace.setAttribute("href","https://www.escuelaartegranada.com");
+        enlace.textContent="enlace";
+
+
+
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+            boton.addEventListener("click",()=>{
+                let contenido=p.textContent;
+                p.textContent+=contenido;
+            })
+
+
+
+            boton2.addEventListener("click",()=>{
+                enlace.textContent="enlace cambiado";
+                enlace.setAttribute("href","https://www.google.es");
+            })
+            document.body.append(p,boton,enlace,boton2);
+        })
+    </script>
+</body>
+</html>

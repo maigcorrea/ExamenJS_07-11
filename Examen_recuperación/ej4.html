@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const usuarios= [
+            { id: 1, name: "Juan Pérez", age: 25, email: "juan.perez@example.com" },
+            { id: 2, name: "Ana Gómez", age: 30, email: "ana.gomez@example.com" },
+            { id: 3, name: "Carlos López", age: 22, email: "carlos.lopez@example.com" },
+            { id: 4, name: "Marta Ruiz", age: 28, email: "marta.ruiz@example.com" }
+        ];
+
+        const tabla=document.createElement("table");
+        const tr=document.createElement("tr");
+        const datos=["ID","nombre","Edad","email"]
+
+        document.addEventListener("DOMContentLoaded",()=>{
+            
+            for (let i = 0; i < datos.length; i++) {
+                const th=document.createElement("th");
+                th.textContent=datos[i];
+                tr.append(th);
+            }
+
+            tabla.append(tr);
+
+            usuarios.forEach(usuario=>{
+                const trUser=document.createElement("tr");
+                const tdId=document.createElement("td");
+                tdId.textContent=usuario["id"];
+
+                const tdName=document.createElement("td");
+                tdName.textContent=usuario["name"];
+
+                const tdAge=document.createElement("td");
+                tdAge.textContent=usuario["age"];
+
+                const tdEmail=document.createElement("td");
+                tdEmail.textContent=usuario["email"];
+
+                
+                trUser.append(tdId,tdName,tdAge,tdEmail);
+                tabla.append(trUser);
+            })
+            
+            document.body.append(tabla);
+        })
+
+
+
+
+    </script>
+</body>
+</html>

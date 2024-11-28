@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //CONST Y VAR
+        const colores=[
+            { rojo: "red" },
+            { verde: "green"},
+            { blue: "blue" }
+        ];
+
+        const select=document.createElement("select");
+
+
+        //FUNCIONES
+
+
+        //CÓDIGO
+        document.addEventListener("DOMContentLoaded",()=>{
+
+            const option1=document.createElement("option");
+            option1.setAttribute("value",colores[0]["rojo"]);
+            option1.textContent=colores[0]["rojo"];
+
+            const option2=document.createElement("option");
+            option2.setAttribute("value",colores[1]["verde"]);
+            option2.textContent=colores[1]["verde"];
+
+            const option3=document.createElement("option");
+            option3.setAttribute("value",colores[2]["blue"]);
+            option3.textContent=colores[2]["blue"];
+
+            select.append(option1,option2,option3);
+            
+
+
+
+            select.addEventListener("change",()=>{
+                let valor=select.value;
+                document.body.style.backgroundColor=valor;
+            })
+
+            document.body.append(select);
+
+        })
+    </script>
+</body>
+</html>

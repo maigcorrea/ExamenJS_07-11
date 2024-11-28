@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="buscar" type="text" placeholder="Buscar...">
+    <button>Cambiar Placeholder</button>
+
+    <ul id="itemList">
+        <li>Elemento 1</li>
+        <li>Elemento 2</li>
+        <li>Elemento 3</li>
+    </ul>
+    <button>Añadir Borde</button>
+
+    <ul id="lista">
+        <li>Elemento A</li>
+        <li>Elemento B</li>
+        <li>Elemento C</li>
+    </ul>
+    <button>Vaciar Lista</button>
+
+    <div id="parrafo">
+        <p>Párrafo inicial</p>
+    </div>
+    <button>Añadir Párrafo</button>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded",()=>{
+            //Apartado 1
+
+            const boton1=document.querySelector("input+button");
+            const input=document.querySelector("#buscar");
+
+            boton1.addEventListener("click",()=>{
+                input.setAttribute("placeholder","Cambiado");
+            })
+
+            //Apartado 2
+            const li1=document.querySelectorAll("#itemList li");
+            const boton2=document.querySelector("#itemList+button");
+            
+            boton2.addEventListener("click",()=>{
+                li1.forEach(elemento=>{
+                    elemento.style.border="solid 1px red";
+                })
+            })
+
+            //Apartado 3
+            const boton3=document.querySelector("#lista+button");
+            const li2=document.querySelectorAll("#lista li");
+            boton3.addEventListener("click",()=>{
+                li2.forEach(li=>{
+                    li.remove();
+                })
+            })
+
+            //Apartado 4
+            const boton4=document.querySelector("#parrafo+button");
+            const div=document.querySelector("#parrafo");
+
+            boton4.addEventListener("click",()=>{
+                const p=document.createElement("p");
+                p.textContent="Otro párrafo";
+                div.append(p);
+            })
+        })
+    </script>
+</body>
+</html>
